@@ -1,0 +1,3 @@
+C:/Users/Noppa/Desktop/Noppa/Exercicios Maromo/ProjetoFragatas/cmake-build-debug/CMakeFiles/ProjetoFragatas.dir
+C:/Users/Noppa/Desktop/Noppa/Exercicios Maromo/ProjetoFragatas/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Noppa/Desktop/Noppa/Exercicios Maromo/ProjetoFragatas/cmake-build-debug/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,14 @@
+[
+{
+  "directory": "C:/Users/Noppa/Desktop/Noppa/Exercicios Maromo/ProjetoFragatas/cmake-build-debug",
+  "command": "C:\\PROGRA~1\\JETBRA~1\\CLION2~1.4\\bin\\mingw\\bin\\gcc.exe -g -std=gnu11 -fdiagnostics-color=always -o CMakeFiles\\ProjetoFragatas.dir\\main.c.obj -c \"C:\\Users\\Noppa\\Desktop\\Noppa\\Exercicios Maromo\\ProjetoFragatas\\main.c\"",
+  "file": "C:/Users/Noppa/Desktop/Noppa/Exercicios Maromo/ProjetoFragatas/main.c",
+  "output": "C:/Users/Noppa/Desktop/Noppa/Exercicios Maromo/ProjetoFragatas/cmake-build-debug/CMakeFiles/ProjetoFragatas.dir/main.c.obj"
+},
+{
+  "directory": "C:/Users/Noppa/Desktop/Noppa/Exercicios Maromo/ProjetoFragatas/cmake-build-debug",
+  "command": "C:\\PROGRA~1\\JETBRA~1\\CLION2~1.4\\bin\\mingw\\bin\\gcc.exe -g -std=gnu11 -fdiagnostics-color=always -o CMakeFiles\\ProjetoFragatas.dir\\fragata.c.obj -c \"C:\\Users\\Noppa\\Desktop\\Noppa\\Exercicios Maromo\\ProjetoFragatas\\fragata.c\"",
+  "file": "C:/Users/Noppa/Desktop/Noppa/Exercicios Maromo/ProjetoFragatas/fragata.c",
+  "output": "C:/Users/Noppa/Desktop/Noppa/Exercicios Maromo/ProjetoFragatas/cmake-build-debug/CMakeFiles/ProjetoFragatas.dir/fragata.c.obj"
+}
+]
