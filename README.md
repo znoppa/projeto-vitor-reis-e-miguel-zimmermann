@@ -1,2 +1,2 @@
-# Gestão de Frotas Espaciais e Manutenção de Fragatas (Naves)
+# Gestão de Frotas e Manutenção de Fragatas (Naves)
 Atividade Maromo.
