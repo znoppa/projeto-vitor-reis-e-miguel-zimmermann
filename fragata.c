@@ -4,6 +4,7 @@
 #include "fragata.h"
 
 #define ARQUIVO_FROTA "fragatas.txt"
+#define ANO_ATUAL 2500
 
 p_fragata frota[MAX_FRAGATAS];
 
@@ -135,6 +136,78 @@ void imprimir_fragata(int posicao) {
     printf("\n //-----------------========------------------// \n ");
 }
 
+int excluir_fragata_por_codigo(char codigo[]){
+    int posicao = buscar_posicao_por_codigo(codigo);
+
+    if (posicao == -1) {
+        printf("Fragata nao encontrada.\n");
+        return 0;
+    }
+
+    free(frota[posicao]);
+    frota[posicao] = NULL;
+    return 1;
+}
+
+void editar_fragata_por_codigo(char codigo[]) {
+    int posicao = buscar_posicao_por_codigo(codigo);
+    char linha[200];
+    char extra;
+    Fragata novos_dados;
+
+    if (posicao == -1) {
+        printf("Fragata nao encontrada.\n");
+        return;
+    }
+
+    /* Mantém o código, pois ele é o identificador da fragata. */
+    strcpy(novos_dados.codigo, frota[posicao]->codigo);
+
+    printf("Novo modelo: ");
+    if (fgets(linha, sizeof(linha), stdin) == NULL) {
+        return;
+    }
+
+    linha[strcspn(linha, "\r\n")] = '\0';
+
+    if (linha[0] == '\0' ||
+        strlen(linha) >= sizeof(novos_dados.modelo) ||
+        strchr(linha, ';') != NULL) {
+        printf("Modelo invalido.\n");
+        return;
+    }
+
+    strcpy(novos_dados.modelo, linha);
+
+    printf("Novo ano de fabricacao: ");
+    if (fgets(linha, sizeof(linha), stdin) == NULL ||
+        sscanf(linha, "%4d %c", &novos_dados.ano_fabricacao, &extra) != 1 ||
+        novos_dados.ano_fabricacao < 1 ||
+        novos_dados.ano_fabricacao > 9999) {
+        printf("Ano invalido.\n");
+        return;
+    }
+
+    printf("Nova distancia percorrida: ");
+    if (fgets(linha, sizeof(linha), stdin) == NULL ||
+        sscanf(linha, "%lf %c", &novos_dados.distancia_percorrida, &extra) != 1 ||
+        novos_dados.distancia_percorrida < 0) {
+        printf("Distancia invalida.\n");
+        return;
+    }
+
+    printf("Novo valor da revisao: ");
+    if (fgets(linha, sizeof(linha), stdin) == NULL ||
+        sscanf(linha, "%lf %c", &novos_dados.valor_revisao, &extra) != 1 ||
+        novos_dados.valor_revisao < 0) {
+        printf("Valor invalido.\n");
+        return;
+    }
+
+    *frota[posicao] = novos_dados;
+    printf("Fragata atualizada com sucesso.\n");
+}
+
 void listar_fragatas(void) {
     int total = 0;
     for (int i = 0; i < MAX_FRAGATAS; i++) {
@@ -150,30 +223,57 @@ void listar_fragatas(void) {
 }
 
 void gerar_relatorio(void) {
-    int pos_maior = -1;
+    int pos_maior_distancia = -1;
+    int pos_revisao_mais_cara = -1;
     int total = 0;
+
     double soma_revisoes = 0;
+    double soma_anos = 0;
 
     for (int i = 0; i < MAX_FRAGATAS; i++) {
-        if (frota[i] != NULL) {
-            total++;
-            soma_revisoes += frota[i]->valor_revisao;
+        if (frota[i] == NULL) {
+            continue;
+        }
 
-            if (pos_maior == -1 || frota[i]->distancia_percorrida >
-                frota[pos_maior]->distancia_percorrida) {
-                pos_maior = i;
-            }
+        total++;
+        soma_revisoes += frota[i]->valor_revisao;
+        soma_anos += frota[i]->ano_fabricacao;
+
+        if (pos_maior_distancia == -1 ||
+            frota[i]->distancia_percorrida >
+            frota[pos_maior_distancia]->distancia_percorrida) {
+            pos_maior_distancia = i;
+        }
+
+        if (pos_revisao_mais_cara == -1 ||
+            frota[i]->valor_revisao >
+            frota[pos_revisao_mais_cara]->valor_revisao) {
+            pos_revisao_mais_cara = i;
         }
     }
 
     if (total == 0) {
-        printf("Nenhuma fragata cadastrada \n");
+        printf("Nenhuma fragata cadastrada.\n");
         return;
     }
 
-    printf("Fragata que mais viajou: \n");
-    imprimir_fragata(pos_maior);
-    printf("Custo medio de revisao: %.2f unidades \n", soma_revisoes / total);
+    double idade_media = ANO_ATUAL - (soma_anos / total);
+
+    printf("\nRELATORIO DE FROTA\n");
+    printf("Total de fragatas: %d\n", total);
+    printf("Custo total das revisoes: %.2f unidades\n",
+           soma_revisoes);
+    printf("Custo medio das revisoes: %.2f unidades\n",
+           soma_revisoes / total);
+    printf("Ano medio de fabricacao: %.1f\n",
+           soma_anos / total);
+    printf("Idade media das fragatas: %.1f anos\n", idade_media);
+
+    printf("\nFragata que percorreu a maior distancia:\n");
+    imprimir_fragata(pos_maior_distancia);
+
+    printf("\nFragata com a revisao mais cara:\n");
+    imprimir_fragata(pos_revisao_mais_cara);
 }
 
 void carregar_fragatas(void) {

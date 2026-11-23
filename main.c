@@ -21,7 +21,7 @@ int main(void) {
                 break;
 
             case 2:
-                printf("Codigo da fragata: ");
+                printf("Codigo da fragata que deseja buscar: ");
                 if (fgets(codigo, sizeof(codigo), stdin) != NULL) {
                     codigo[strcspn(codigo, "\r\n")] = '\0';
                     buscar_fragata_por_codigo(codigo);
@@ -35,21 +35,35 @@ int main(void) {
             case 4:
                 gerar_relatorio();
                 break;
-
-            case -1: //fim da entrada do teclado
             case 5:
+                printf("Codigo da fragata que deseja editar: ");
+
+                if (fgets(codigo, sizeof(codigo), stdin) != NULL) {
+                    codigo[strcspn(codigo, "\r\n")] = '\0';
+                    editar_fragata_por_codigo(codigo);
+                }
+                break;
+            case 6:
+                printf("Codigo da fragata que deseja excluir: ");
+
+                if (fgets(codigo, sizeof(codigo), stdin) != NULL) {
+                    codigo[strcspn(codigo, "\r\n")] = '\0';
+                    excluir_fragata_por_codigo(codigo);
+                }
+                break;
+            case 7:
                 salvou = salvar_fragatas();
+
                 if (salvou == 1) {
                     printf("A frota foi salva, encerrando o programa.\n");
                 } else {
-                    printf("Erro ao salvar -> fragatas.txt \n");
+                    printf("Erro ao salvar -> fragatas.txt\n");
                 }
                 break;
-
-            default:
-                printf("Opcao invalida \n");
+                default:
+                printf("Opcao invalida.\n");
                 break;
-        }
+            }
     } while (salvou == 0 && opcao != -1);
 
     liberar_frota();
@@ -71,7 +85,9 @@ int montar_menu(void) {
     printf("2. Buscar fragata por codigo\n");
     printf("3. Listar fragatas\n");
     printf("4. Exibir relatorio\n");
-    printf("5. Salvar e sair\n");
+    printf("5. Editar fragata\n");
+    printf("6. Excluir fragata\n");
+    printf("7. Salvar e sair\n");
     printf("Escolha uma opcao: ");
 
     if (fgets(linha, sizeof(linha), stdin) == NULL) {

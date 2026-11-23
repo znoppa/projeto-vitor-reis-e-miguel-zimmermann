@@ -33,6 +33,12 @@ void buscar_fragata_por_codigo(char codigo[]);
 // Mostrar a fragata
 void imprimir_fragata(int posicao);
 
+// Editar uma fragata
+void editar_fragata_por_codigo(char codigo[]);
+
+// Exlcuir uma fragata
+int excluir_fragata_por_codigo(char codigo[]);
+
 // Mostrar todas as fragatas
 void listar_fragatas(void);
 
