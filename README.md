@@ -19,7 +19,9 @@ O sistema disponibiliza as seguintes operações:
 - **Cadastro de fragatas:** registra novas naves, validando os dados fornecidos e impedindo códigos duplicados.
 - **Busca por código:** localiza uma fragata a partir de seu identificador único.
 - **Listagem da frota:** apresenta todas as fragatas cadastradas e suas informações.
-- **Relatório gerencial:** identifica a fragata que percorreu a maior distância e calcula o custo médio de revisão da frota.
+- **Edição de fragatas:** permite atualizar modelo, ano de fabricação, distância percorrida e valor da revisão, mantendo o código identificador.
+- **Exclusão de fragatas:** remove da frota uma fragata localizada por seu código e libera a memória correspondente.
+- **Relatório gerencial:** apresenta o total de fragatas, os custos total e médio das revisões, o ano e a idade média da frota, a fragata que percorreu a maior distância e a que possui a revisão mais cara.
 - **Persistência de dados:** carrega automaticamente os registros existentes e permite salvá-los em arquivo.
 - **Gerenciamento de memória:** utiliza alocação dinâmica e libera a memória utilizada ao encerrar a aplicação.
 
@@ -59,7 +61,7 @@ Contém a definição da estrutura `Fragata`, o limite de registros, os tipos de
 
 **`fragata.c`**
 
-Implementa as operações de cadastro, busca, listagem, geração de relatórios, leitura e gravação de arquivos, além do gerenciamento de memória.
+Implementa as operações de cadastro, busca, edição, exclusão, listagem, geração de relatórios, leitura e gravação de arquivos, além do gerenciamento de memória.
 
 ## Como executar
 
@@ -117,7 +119,9 @@ Ao iniciar o programa, será apresentado o seguinte menu:
 2. Buscar fragata por codigo
 3. Listar fragatas
 4. Exibir relatorio
-5. Salvar e sair
+5. Editar fragata
+6. Excluir fragata
+7. Salvar e sair
 
 Escolha uma opcao:
 ```
@@ -134,9 +138,9 @@ Distancia percorrida em anos-luz: 12500.5
 Valor da revisao em unidades: 3200
 ```
 
-Após o cadastro, a fragata poderá ser consultada, listada e considerada nos relatórios.
+Após o cadastro, a fragata poderá ser consultada, editada, excluída, listada e considerada nos relatórios. A edição e a exclusão utilizam o código da fragata para localizar o registro.
 
-A opção `5` salva os registros no arquivo `fragatas.txt` e encerra a aplicação quando a gravação é concluída.
+A opção `7` salva os registros no arquivo `fragatas.txt` e encerra a aplicação quando a gravação é concluída.
 
 ## Armazenamento dos dados
 
@@ -169,6 +173,7 @@ Durante o desenvolvimento, foram utilizados conceitos importantes da programaç�
 - **Modularização:** separação das responsabilidades entre arquivos `.c` e `.h`.
 - **Manipulação de arquivos:** leitura e gravação com `fopen()`, `fgets()`, `fprintf()` e `fclose()`.
 - **Validação de entradas:** verificação dos dados informados e prevenção de cadastros duplicados.
+- **Atualização e exclusão de registros:** alteração de estruturas existentes e liberação individual de memória com `free()`.
 - **Estruturas de controle:** utilização de condicionais, laços e menus interativos.
 
 ## Limitações
@@ -176,7 +181,8 @@ Durante o desenvolvimento, foram utilizados conceitos importantes da programaç�
 A versão atual possui algumas limitações:
 
 - A frota está limitada a 100 registros.
-- Não há operações de edição ou exclusão de fragatas.
+- O código identificador de uma fragata não pode ser alterado durante a edição.
+- O cálculo da idade média considera o ano atual do sistema como 2500.
 - O armazenamento é realizado exclusivamente em arquivo de texto.
 - A interação com o usuário ocorre por meio do terminal.
 
